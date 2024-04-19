@@ -5,6 +5,7 @@ import tkinter.font as font
 import os
 
 def addToPlaylist():
+    global tracklist,index
     os.chdir(filedialog.askdirectory(title="Open a directory with the songs you'd like to play"))
     tracklist = os.listdir()
 
@@ -34,25 +35,27 @@ def rewindSong():
     mixer.music.rewind()
 
 def previousSong():
-    previous_song = songs_list.curselection()
-    previous_song = previous_song[0]-1
+    global index
+    index -= 1
+    previous_song = tracklist[index]
 
     mixer.music.load(previous_song)
     mixer.music.play()
 
-    songs_list.selection_clear(0, END)
+    #songs_list.selection_clear(0, END)
     songs_list.activate(previous_song)
 
 def nextSong():
-    next_song = songs_list.curselection()
-    next_song = next_song[0]+1
+    global index
+    index += 1
 
+    next_song = tracklist[index]
     mixer.music.load(next_song)
     mixer.music.play()
 
-    songs_list.selection_clear(0, END)
+    #songs_list.selection_clear(0, END)
     songs_list.activate(next_song)
-    songs_list.selection_set(next_song)
+    #songs_list.selection_set(next_song)
     
 # Create the root window via tkinter
 root_window = Tk()
@@ -63,6 +66,9 @@ mixer.init() # Initialize pygame's mixer functionality
 songs_list = Listbox(root_window, selectmode=SINGLE, bg="blue", fg="white", font=("arial",15), height=12, width=47,
                      selectbackground="black", selectforeground="gray")
 songs_list.grid(columnspan=9)
+
+
+index = 0
 
 defined_font = font.Font(family = "Helvetica")
 
