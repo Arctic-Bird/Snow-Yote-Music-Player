@@ -6,11 +6,11 @@ import os
 
 def addToPlaylist():
     global tracklist,index
-    os.chdir(filedialog.askdirectory(title="Open a directory with the songs you'd like to play"))
+    directory = os.chdir(filedialog.askdirectory(title="Open a directory with the songs you'd like to play"))
+
     tracklist = os.listdir()
 
-    for song in tracklist:
-        songs_list.insert(END, song)
+    songs_list.insert(END, song)
 
 def deleteFromPlaylist():
     current_song = songs_list.curselection()
